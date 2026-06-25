@@ -1,0 +1,53 @@
+<template>
+    <lightning-card title="Account Search" icon-name="standard:account">
+        <div class="slds-m-around_medium">
+            
+            <lightning-input
+                label="Search Accounts"
+                placeholder="Type account name..."
+                onchange={handleSearchChange}
+                class="slds-m-bottom_medium">
+            </lightning-input>
+
+            <template if:true={isLoading}>
+                <lightning-spinner 
+                    alternative-text="Searching..." 
+                    size="small">
+                </lightning-spinner>
+            </template>
+
+            <template if:true={showNoResults}>
+                <p class="slds-text-color_weak slds-m-top_small">
+                    No results found.
+                </p>
+            </template>
+
+            <template if:true={hasResults}>
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-m-top_small">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Industry</th>
+                            <th>Phone</th>
+                            <th>Annual Revenue</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={accounts} for:item="acc">
+                            <tr key={acc.Id} 
+                                onclick={handleRowClick} 
+                                data-id={acc.Id}
+                                class="clickable-row">
+                                <td>{acc.Name}</td>
+                                <td>{acc.Industry}</td>
+                                <td>{acc.Phone}</td>
+                                <td>{acc.AnnualRevenue}</td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </template>
+
+        </div>
+    </lightning-card>
+</template>
